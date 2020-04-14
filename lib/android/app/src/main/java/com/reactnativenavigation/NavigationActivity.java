@@ -73,7 +73,10 @@ public class NavigationActivity extends AppCompatActivity implements DefaultHard
     @Override
     public void invokeDefaultOnBackPressed() {
         if (!navigator.handleBack(new CommandListenerAdapter())) {
-            super.onBackPressed();
+            // Back key 눌렀을 때 activity kill 시키는 것이 기본 동작임.
+            //   -> 그렇게 되면 sms listener 등도 같이 사라짐.
+            //   -> Home key 눌렀을 때처럼 kill되지 않고 background로 전환만 되게 수점함.
+            this.moveTaskToBack(true);  //super.onBackPressed();
         }
     }
 
